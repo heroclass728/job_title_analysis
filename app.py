@@ -8,10 +8,13 @@ if __name__ == '__main__':
 
     train_path, test_path = create_train_test_data(test_ratio=TEST_RATIO)
     if PREDICTION_ONLY:
+        print("Predicting model...")
 
         accuracy = predict_df(model_path=MODEL_PATH, test_df_path=test_path)
         print("Accuracy:", accuracy)
     else:
+        print("Training model...")
         model_path = train_model(train_df_path=train_path)
+        print("Predicting model...")
         accuracy = predict_df(model_path=MODEL_PATH, test_df_path=test_path)
         print("Accuracy:", accuracy)
