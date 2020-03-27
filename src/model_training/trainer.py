@@ -11,7 +11,7 @@ from settings import MODEL_PATH, JOB_TITLE_CSV_PATH
 
 def train_model(train_df_path):
 
-    train = pd.read_csv(train_df_path)
+    train = pd.read_csv(JOB_TITLE_CSV_PATH)
     df_vectorization = CountVectorizer(tokenizer=tokenize_text, ngram_range=(1, 5))
     clf = SVC(kernel='linear')
 

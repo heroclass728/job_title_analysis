@@ -11,3 +11,4 @@ MODEL_DIR_PATH = make_directory_if_not_exists(os.path.join(CUR_DIR, 'utils', 'mo
 MODEL_PATH = os.path.join(MODEL_DIR_PATH, "job_title_model.pkl")
 
 TEST_RATIO = 0.3
+PREDICTION_ONLY = True
