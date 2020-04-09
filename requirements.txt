@@ -1,3 +1,6 @@
 pandas
 scikit-learn
 spacy
+xlrd
+nltk
+joblib

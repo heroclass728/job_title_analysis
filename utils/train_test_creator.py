@@ -6,8 +6,8 @@ from sklearn.model_selection import train_test_split
 
 def create_train_test_data(test_ratio):
 
-    total_df = pd.read_csv(JOB_TITLE_CSV_PATH)
-    total_categories = total_df["Tag_Output"].values.tolist()
+    total_df = pd.read_excel(JOB_TITLE_CSV_PATH)
+    total_categories = total_df["Tag"].values.tolist()
     categories = []
     for total_cat in total_categories:
         if total_cat not in categories:
@@ -18,7 +18,7 @@ def create_train_test_data(test_ratio):
 
     for cat in categories:
 
-        cat_df = total_df.loc[total_df["Tag_Output"] == cat]
+        cat_df = total_df.loc[total_df["Tag"] == cat]
         sub_train, sub_test = train_test_split(cat_df, test_size=test_ratio, random_state=42)
         train_df = pd.concat([train_df, sub_train])
         test_df = pd.concat([test_df, sub_test])
