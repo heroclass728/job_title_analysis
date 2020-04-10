@@ -85,4 +85,8 @@ This project is to develop the model to classify the job titles using NLP techno
     After training, the accuracy of the model is displayed in terminal, and the model is saved in 
     /utils/model/job_title_model.joblib.
 
-** NOTE: All the files to use in this project including new file to predict and seed data set file to train are csv files.
+** NOTE: All the files to use in this project including new file to predict and seed data set file to train are 
+csv files, not excel file.
+And in all the csv files, the column names must be "Title" and "Tag", anything else is not allowed in project. 
+Then you have to replace "null" value (if exists in file) with "unknown" in csv files you import, especially in Tag column,  
+because Python recognizes the "null" value as any mathematical value, not string.
