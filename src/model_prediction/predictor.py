@@ -1,10 +1,17 @@
 import pandas as pd
+import time
 
 from sklearn.metrics import accuracy_score
 from sklearn.externals import joblib
 from joblib import load
 from src.model_training.trainer import get_bow_vector
 from settings import MODEL_PATH, PREDICT_CSV_PATH
+
+print("load model...")
+st = time.time()
+model = load(MODEL_PATH)
+ed = time.time()
+print(ed - st)
 
 
 def predict_job_tag(model_path, df_path):
@@ -33,11 +40,8 @@ def predict_df(model_path, test_df_path):
     return accuracy
 
 
-def predict_tags(df_path):
+def predict_tags(titles):
 
-    model = load(MODEL_PATH)
-    df = pd.read_csv(df_path)
-    titles = df["Title"].values.tolist()
     test_bow_vectors = get_bow_vector(df_titles=titles)
     predictions = model.predict(test_bow_vectors)
 
@@ -47,7 +51,8 @@ def predict_tags(df_path):
 def estimate_accuracy(test_df_path):
 
     test_df = pd.read_csv(test_df_path)
-    predicted_tags = predict_tags(df_path=test_df_path)
+    test_titles = test_df["Title"].values.tolist()
+    predicted_tags = predict_tags(titles=test_titles)
     test_tags = test_df["Tag"].values.tolist()
     accuracy = accuracy_score(test_tags, predicted_tags)
 
@@ -56,8 +61,9 @@ def estimate_accuracy(test_df_path):
 
 def predict_new_tags(new_df_path):
 
-    new_predictions = predict_tags(df_path=new_df_path)
-    new_titles = pd.read_csv(new_df_path)["Tag"].values.tolist()
+    new_df = pd.read_csv(new_df_path)
+    new_titles = new_df["Title"].values.tolist()
+    new_predictions = predict_tags(titles=new_titles)
     new_df = pd.DataFrame(list(zip(new_titles, new_predictions)), columns=["Title", "Tag"])
     new_df.to_csv(PREDICT_CSV_PATH, index=True, header=True, mode="w")
 

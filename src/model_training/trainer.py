@@ -4,10 +4,16 @@ from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.pipeline import Pipeline
 from sklearn.svm import SVC
 from sklearn.externals import joblib
-from joblib import dump, load
+from joblib import dump
 from src.corpus.creator import Trainer
 from src.corpus.creator import tokenize_text
 from settings import MODEL_PATH, CORPUS_PATH
+
+print("load corpus...")
+f = open(CORPUS_PATH, 'r')
+corpus = eval(f.read())
+f.close()
+corpus_keys = list(corpus.keys())
 
 
 def train_model(train_df_path):
@@ -29,11 +35,6 @@ def train_model(train_df_path):
 
 
 def get_bow_vector(df_titles):
-
-    f = open(CORPUS_PATH, 'r')
-    corpus = eval(f.read())
-    f.close()
-    corpus_keys = list(corpus.keys())
 
     title_vectors = []
     for title in df_titles:
@@ -58,21 +59,11 @@ def train_model_bow(train_df_path):
 
     bow_vector = get_bow_vector(df_titles=train_titles)
 
-    model = SVC(kernel='rbf')
-    model.fit(bow_vector, train_tags)
-    dump(model, MODEL_PATH)
+    training_model = SVC(kernel='rbf')
+    training_model.fit(bow_vector, train_tags)
+    dump(training_model, MODEL_PATH)
 
     return MODEL_PATH
-
-
-def predict_model_accuracy(titles):
-
-    model = load(MODEL_PATH)
-    test_bow_vectors = get_bow_vector(df_titles=titles)
-
-    predictions = model.predict(test_bow_vectors)
-
-    return predictions
 
 
 if __name__ == '__main__':

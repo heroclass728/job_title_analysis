@@ -54,12 +54,21 @@ This project is to develop the model to classify the job titles using NLP techno
 
 ## Execution
 
-- Prediction
+- Prediction one title
+
+    Please run the following command.
+    
+    ```
+        python3 app.py --job title "Title String to predict"
+    ```
+  
+- Prediction csv file
 
     If you want only prediction of new job titles with the trained model, please copy the csv file to predict in the 
     project directory and set the following variables in settings file.
     
     * Please set PREDICTION_ONLY True.
+    * Please set PREDICTION_ONE_TITLE False.
     * Please set NEW_PREDICTION_PATH the absolute path of the new csv file to predict.   
     
     And please go ahead project directory and run the following command.
